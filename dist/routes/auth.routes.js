@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_controllers_1 = require("../controllers/auth/auth.controllers");
+const requireAuth_1 = __importDefault(require("../middleware/requireAuth"));
+const router = (0, express_1.Router)();
+router.post("/register", auth_controllers_1.registerHandler);
+router.post("/login", auth_controllers_1.loginHandler);
+router.get("/verify-email", auth_controllers_1.verifyEmailHandler);
+router.post("/refresh", auth_controllers_1.refreshHandler);
+router.post("/logout", auth_controllers_1.logoutHandler);
+router.post("/forgot-password", auth_controllers_1.forgotPasswordHandler);
+router.post("/reset-password", auth_controllers_1.resetPasswordHandler);
+router.get("/google", auth_controllers_1.googleAuthStartHandler);
+router.get("/google/callback", auth_controllers_1.googleAuthCallbackHandler);
+router.post("/2fa/setup", requireAuth_1.default, auth_controllers_1.twoFASetupHandler);
+router.post("/2fa/verify", requireAuth_1.default, auth_controllers_1.twoFAVerifyHandler);
+exports.default = router;
